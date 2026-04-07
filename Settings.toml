@@ -41,7 +41,8 @@ port = 8080
 repository_path = "third_party/linux"
 
 [review]
-concurrency = 20
+# reduce the concurrency for API or local performance limits
+concurrency = 1
 worktree_dir = "review_trees"
 timeout_seconds = 7200
 max_retries = 3
