@@ -236,12 +236,47 @@ pub fn create_provider(settings: &Settings) -> Result<Arc<dyn AiProvider>> {
                 settings.ai.api_timeout_secs,
             )))
         }
+        "omlx" => {
+            let base_url = settings
+                .ai
+                .omlx
+                .as_ref()
+                .and_then(|c| c.base_url.clone())
+                .unwrap_or_else(omlx::OmlxClient::default_base_url);
+
+            let context_window = settings
+                .ai
+                .omlx
+                .as_ref()
+                .and_then(|c| c.context_window_size)
+                .unwrap_or_else(|| {
+                    omlx::OmlxClient::default_context_window_for_model(&settings.ai.model)
+                });
+
+            let max_tokens = settings
+                .ai
+                .omlx
+                .as_ref()
+                .and_then(|c| c.max_tokens)
+                .unwrap_or_else(|| {
+                    omlx::OmlxClient::default_max_tokens_for_model(&settings.ai.model)
+                });
+
+            Ok(Arc::new(omlx::OmlxClient::new(
+                base_url,
+                settings.ai.model.clone(),
+                context_window,
+                max_tokens,
+                settings.ai.api_timeout_secs,
+            )))
+        }
         p => bail!("Unsupported AI provider: {}", p),
     }
 }
 pub mod bedrock;
 pub mod claude;
 pub mod gemini;
+pub mod omlx;
 pub mod openai;
 pub mod proxy;
 pub mod quota;

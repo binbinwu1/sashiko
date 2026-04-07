@@ -134,6 +134,20 @@ pub struct OpenAiCompatSettings {
 
 #[derive(Debug, Deserialize, Clone)]
 #[allow(unused)]
+pub struct OmlxSettings {
+    /// oMLX server endpoint. Default: http://localhost:1993/v1/chat/completions
+    #[serde(default)]
+    pub base_url: Option<String>,
+    /// Context window size for the model. Default: 131072 (Gemma 4 27B).
+    #[serde(default)]
+    pub context_window_size: Option<usize>,
+    /// Maximum output tokens per request. Default: 8192.
+    #[serde(default)]
+    pub max_tokens: Option<u32>,
+}
+
+#[derive(Debug, Deserialize, Clone)]
+#[allow(unused)]
 pub struct AiSettings {
     pub provider: String,
     pub model: String,
@@ -152,6 +166,7 @@ pub struct AiSettings {
     pub gemini: Option<GeminiSettings>,
     pub bedrock: Option<BedrockSettings>,
     pub openai_compat: Option<OpenAiCompatSettings>,
+    pub omlx: Option<OmlxSettings>,
 }
 
 fn default_api_timeout_secs() -> u64 {
