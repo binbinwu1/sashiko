@@ -170,7 +170,7 @@ pub struct AiSettings {
 }
 
 fn default_api_timeout_secs() -> u64 {
-    300
+    1200
 }
 
 fn default_temperature() -> f32 {

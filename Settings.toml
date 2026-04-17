@@ -24,21 +24,28 @@ port = 119
 # dry_run = true
 
 [ai]
-provider = "gemini"
-model = "gemini-3.1-pro-preview"
-max_input_tokens = 900000
+provider = "omlx"
+#model = "Qwen3.5-27B-Claude-4.6-Opus-Distilled-MLX-6bit"
+model = "Qwen3.5-122B-A10B-4bit"
+max_input_tokens = 200000
 max_interactions = 50
 temperature = 1.0
 
 [ai.claude]
 prompt_caching = true
 
+[ai.omlx]
+base_url = "http://127.0.0.1:8000/v1/chat/completions"
+context_window_size = 262144
+max_tokens = 200000
+api_timeout_secs = 1200
+
 [server]
 host = "127.0.0.1"
 port = 8080
 
 [git]
-repository_path = "third_party/linux"
+repository_path = "/Volumes/workspace/linux"
 
 [review]
 # reduce the concurrency for API or local performance limits
